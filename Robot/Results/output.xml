@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.0.4 (Python 3.7.0 on win32)" generated="20180813 15:12:50.256">
+<suite id="s1" name="Weather" source="C:\Users\Dina\PycharmProjects\Weather\Robot\Tests\Weather.robot">
+<test id="s1-t1" name="Check Weather Webservice is working properly">
+<kw name="Test Weather Webservice Request" library="Request">
+<arguments>
+<arg>${city}</arg>
+<arg>${country}</arg>
+<arg>${status_code}</arg>
+<arg>${expected_city}</arg>
+<arg>${expected_country}</arg>
+<arg>${error_message}</arg>
+</arguments>
+<kw name="Call Weather Webservice Request" library="Request">
+<arguments>
+<arg>${city}</arg>
+<arg>${country}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>city=${city}</arg>
+<arg>country=${country}</arg>
+</arguments>
+<assign>
+<var>${request_body}</var>
+</assign>
+<msg timestamp="20180813 15:12:51.546" level="INFO">${request_body} = {'city': 'berlin', 'country': 'germany'}</msg>
+<status status="PASS" starttime="20180813 15:12:51.543" endtime="20180813 15:12:51.546"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${request_body}</arg>
+</arguments>
+<msg timestamp="20180813 15:12:51.548" level="INFO">{'city': 'berlin', 'country': 'germany'}</msg>
+<status status="PASS" starttime="20180813 15:12:51.547" endtime="20180813 15:12:51.548"></status>
+</kw>
+<kw name="Post" library="REST">
+<doc>Make a ``POST`` request call to a specified ``endpoint``.</doc>
+<arguments>
+<arg>${REQUEST_PATH}</arg>
+<arg>${request_body}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20180813 15:12:52.442" level="INFO">${response} = {'seconds': 0.577976, 'status': 200, 'body': {'city': 'Berlin', 'country': 'Germany', 'current': '30', 'units': 'Celsius'}, 'headers': {'Content-Type': 'application/json', 'Content-Length': '91', 'Ser...</msg>
+<status status="PASS" starttime="20180813 15:12:51.549" endtime="20180813 15:12:52.442"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response}</arg>
+</arguments>
+<msg timestamp="20180813 15:12:52.443" level="INFO">{'seconds': 0.577976, 'status': 200, 'body': {'city': 'Berlin', 'country': 'Germany', 'current': '30', 'units': 'Celsius'}, 'headers': {'Content-Type': 'application/json', 'Content-Length': '91', 'Server': 'Werkzeug/0.14.1 Python/3.7.0', 'Date': 'Mon, 13 Aug 2018 13:12:52 GMT'}}</msg>
+<status status="PASS" starttime="20180813 15:12:52.443" endtime="20180813 15:12:52.444"></status>
+</kw>
+<msg timestamp="20180813 15:12:52.444" level="INFO">${response} = {'seconds': 0.577976, 'status': 200, 'body': {'city': 'Berlin', 'country': 'Germany', 'current': '30', 'units': 'Celsius'}, 'headers': {'Content-Type': 'application/json', 'Content-Length': '91', 'Ser...</msg>
+<status status="PASS" starttime="20180813 15:12:51.542" endtime="20180813 15:12:52.444"></status>
+</kw>
+<kw name="Validate Response" library="Request">
+<arguments>
+<arg>${response}</arg>
+<arg>${status_code}</arg>
+<arg>${expected_city}</arg>
+<arg>${expected_country}</arg>
+<arg>${error_message}</arg>
+</arguments>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response_result}</arg>
+</arguments>
+<msg timestamp="20180813 15:12:52.447" level="INFO">{'seconds': 0.577976, 'status': 200, 'body': {'city': 'Berlin', 'country': 'Germany', 'current': '30', 'units': 'Celsius'}, 'headers': {'Content-Type': 'application/json', 'Content-Length': '91', 'Server': 'Werkzeug/0.14.1 Python/3.7.0', 'Date': 'Mon, 13 Aug 2018 13:12:52 GMT'}}</msg>
+<status status="PASS" starttime="20180813 15:12:52.447" endtime="20180813 15:12:52.448"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>should be equal as strings</arg>
+<arg>${response_result['status']}</arg>
+<arg>${status_code}</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response_result['status']}</arg>
+<arg>${status_code}</arg>
+</arguments>
+<msg timestamp="20180813 15:12:52.450" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20180813 15:12:52.449" endtime="20180813 15:12:52.450"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.448" endtime="20180813 15:12:52.451"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${response_result['status']} == 200</arg>
+<arg>Validate Correct Response</arg>
+<arg>${response_result}</arg>
+<arg>${expected_city}</arg>
+<arg>${expected_country}</arg>
+<arg>ELSE</arg>
+<arg>Validate Incorrect Response</arg>
+<arg>${response_result}</arg>
+<arg>${status_code}</arg>
+<arg>${error_message}</arg>
+</arguments>
+<kw name="Validate Correct Response" library="Request">
+<arguments>
+<arg>${response_result}</arg>
+<arg>${expected_city}</arg>
+<arg>${expected_country}</arg>
+</arguments>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>should be equal as strings</arg>
+<arg>${response_result['body']['city']}</arg>
+<arg>${expected_city}</arg>
+<arg>ignore_case=True</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response_result['body']['city']}</arg>
+<arg>${expected_city}</arg>
+<arg>ignore_case=True</arg>
+</arguments>
+<status status="PASS" starttime="20180813 15:12:52.457" endtime="20180813 15:12:52.458"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.456" endtime="20180813 15:12:52.458"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>should be equal as strings</arg>
+<arg>${response_result['body']['country']}</arg>
+<arg>${expected_country}</arg>
+<arg>ignore_case=True</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response_result['body']['country']}</arg>
+<arg>${expected_country}</arg>
+<arg>ignore_case=True</arg>
+</arguments>
+<status status="PASS" starttime="20180813 15:12:52.460" endtime="20180813 15:12:52.461"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.459" endtime="20180813 15:12:52.462"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>should be equal as strings</arg>
+<arg>${response_result['body']['units']}</arg>
+<arg>Celsius</arg>
+<arg>ignore_case=True</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response_result['body']['units']}</arg>
+<arg>Celsius</arg>
+<arg>ignore_case=True</arg>
+</arguments>
+<status status="PASS" starttime="20180813 15:12:52.463" endtime="20180813 15:12:52.464"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.462" endtime="20180813 15:12:52.464"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.455" endtime="20180813 15:12:52.464"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.451" endtime="20180813 15:12:52.465"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.445" endtime="20180813 15:12:52.465"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:51.540" endtime="20180813 15:12:52.465"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:51.538" endtime="20180813 15:12:52.467" critical="yes"></status>
+</test>
+<test id="s1-t2" name="Check Weather Webservice Returns Error With City Only in Payload">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>city=${city}</arg>
+</arguments>
+<assign>
+<var>${request_body}</var>
+</assign>
+<msg timestamp="20180813 15:12:52.474" level="INFO">${request_body} = {'city': 'berlin'}</msg>
+<status status="PASS" starttime="20180813 15:12:52.472" endtime="20180813 15:12:52.474"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${request_body}</arg>
+</arguments>
+<msg timestamp="20180813 15:12:52.476" level="INFO">{'city': 'berlin'}</msg>
+<status status="PASS" starttime="20180813 15:12:52.475" endtime="20180813 15:12:52.476"></status>
+</kw>
+<kw name="Post" library="REST">
+<doc>Make a ``POST`` request call to a specified ``endpoint``.</doc>
+<arguments>
+<arg>${REQUEST_PATH}</arg>
+<arg>${request_body}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20180813 15:12:52.500" level="INFO">${response} = {'seconds': 0.01651, 'status': 422, 'body': {'message': 'Invalid input fields'}, 'headers': {'Content-Type': 'application/json', 'Content-Length': '42', 'Server': 'Werkzeug/0.14.1 Python/3.7.0', 'Date...</msg>
+<status status="PASS" starttime="20180813 15:12:52.477" endtime="20180813 15:12:52.500"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response}</arg>
+</arguments>
+<msg timestamp="20180813 15:12:52.502" level="INFO">{'seconds': 0.01651, 'status': 422, 'body': {'message': 'Invalid input fields'}, 'headers': {'Content-Type': 'application/json', 'Content-Length': '42', 'Server': 'Werkzeug/0.14.1 Python/3.7.0', 'Date': 'Mon, 13 Aug 2018 13:12:52 GMT'}}</msg>
+<status status="PASS" starttime="20180813 15:12:52.501" endtime="20180813 15:12:52.502"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>should be equal as strings</arg>
+<arg>${response['status']}</arg>
+<arg>422</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response['status']}</arg>
+<arg>422</arg>
+</arguments>
+<msg timestamp="20180813 15:12:52.505" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20180813 15:12:52.504" endtime="20180813 15:12:52.505"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.503" endtime="20180813 15:12:52.506"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>should be equal as strings</arg>
+<arg>${response['body']['message']}</arg>
+<arg>Invalid input fields</arg>
+<arg>ignore_case=True</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response['body']['message']}</arg>
+<arg>Invalid input fields</arg>
+<arg>ignore_case=True</arg>
+</arguments>
+<status status="PASS" starttime="20180813 15:12:52.507" endtime="20180813 15:12:52.509"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.506" endtime="20180813 15:12:52.509"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.469" endtime="20180813 15:12:52.510" critical="yes"></status>
+</test>
+<test id="s1-t3" name="Check Weather Webservice Returns Error With Country Only in Payload">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>country=${country}</arg>
+</arguments>
+<assign>
+<var>${request_body}</var>
+</assign>
+<msg timestamp="20180813 15:12:52.515" level="INFO">${request_body} = {'country': 'germany'}</msg>
+<status status="PASS" starttime="20180813 15:12:52.514" endtime="20180813 15:12:52.516"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${request_body}</arg>
+</arguments>
+<msg timestamp="20180813 15:12:52.517" level="INFO">{'country': 'germany'}</msg>
+<status status="PASS" starttime="20180813 15:12:52.517" endtime="20180813 15:12:52.518"></status>
+</kw>
+<kw name="Post" library="REST">
+<doc>Make a ``POST`` request call to a specified ``endpoint``.</doc>
+<arguments>
+<arg>${REQUEST_PATH}</arg>
+<arg>${request_body}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20180813 15:12:52.542" level="INFO">${response} = {'seconds': 0.016385999999999998, 'status': 422, 'body': {'message': 'Invalid input fields'}, 'headers': {'Content-Type': 'application/json', 'Content-Length': '42', 'Server': 'Werkzeug/0.14.1 Python/...</msg>
+<status status="PASS" starttime="20180813 15:12:52.519" endtime="20180813 15:12:52.542"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response}</arg>
+</arguments>
+<msg timestamp="20180813 15:12:52.546" level="INFO">{'seconds': 0.016385999999999998, 'status': 422, 'body': {'message': 'Invalid input fields'}, 'headers': {'Content-Type': 'application/json', 'Content-Length': '42', 'Server': 'Werkzeug/0.14.1 Python/3.7.0', 'Date': 'Mon, 13 Aug 2018 13:12:52 GMT'}}</msg>
+<status status="PASS" starttime="20180813 15:12:52.545" endtime="20180813 15:12:52.547"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>should be equal as strings</arg>
+<arg>${response['status']}</arg>
+<arg>422</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response['status']}</arg>
+<arg>422</arg>
+</arguments>
+<msg timestamp="20180813 15:12:52.551" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20180813 15:12:52.549" endtime="20180813 15:12:52.551"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.548" endtime="20180813 15:12:52.552"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>should be equal as strings</arg>
+<arg>${response['body']['message']}</arg>
+<arg>Invalid input fields</arg>
+<arg>ignore_case=True</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response['body']['message']}</arg>
+<arg>Invalid input fields</arg>
+<arg>ignore_case=True</arg>
+</arguments>
+<status status="PASS" starttime="20180813 15:12:52.554" endtime="20180813 15:12:52.556"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.553" endtime="20180813 15:12:52.556"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.512" endtime="20180813 15:12:52.557" critical="yes"></status>
+</test>
+<test id="s1-t4" name="Check Weather Webservice Returns Error With Empty Payload">
+<kw name="Post" library="REST">
+<doc>Make a ``POST`` request call to a specified ``endpoint``.</doc>
+<arguments>
+<arg>${REQUEST_PATH}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20180813 15:12:52.618" level="INFO">${response} = {'seconds': 0.017861000000000002, 'status': 400, 'body': {'message': 'Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)'}, 'headers': {'Content-Type': 'application/json', 'Conten...</msg>
+<status status="PASS" starttime="20180813 15:12:52.565" endtime="20180813 15:12:52.619"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response}</arg>
+</arguments>
+<msg timestamp="20180813 15:12:52.621" level="INFO">{'seconds': 0.017861000000000002, 'status': 400, 'body': {'message': 'Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)'}, 'headers': {'Content-Type': 'application/json', 'Content-Length': '93', 'Server': 'Werkzeug/0.14.1 Python/3.7.0', 'Date': 'Mon, 13 Aug 2018 13:12:52 GMT'}}</msg>
+<status status="PASS" starttime="20180813 15:12:52.620" endtime="20180813 15:12:52.622"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>should be equal as strings</arg>
+<arg>${response['status']}</arg>
+<arg>400</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response['status']}</arg>
+<arg>400</arg>
+</arguments>
+<msg timestamp="20180813 15:12:52.624" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20180813 15:12:52.623" endtime="20180813 15:12:52.624"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.622" endtime="20180813 15:12:52.625"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>should contain</arg>
+<arg>${response['body']['message']}</arg>
+<arg>Failed to decode JSON object</arg>
+<arg>ignore_case=True</arg>
+</arguments>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${response['body']['message']}</arg>
+<arg>Failed to decode JSON object</arg>
+<arg>ignore_case=True</arg>
+</arguments>
+<status status="PASS" starttime="20180813 15:12:52.627" endtime="20180813 15:12:52.628"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.625" endtime="20180813 15:12:52.629"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.561" endtime="20180813 15:12:52.630" critical="yes"></status>
+</test>
+<test id="s1-t5" name="Check Weather Webservice Returns Error With Extra Keys in Payload">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>city=${city}</arg>
+<arg>country=${country}</arg>
+<arg>extra=extraValue</arg>
+</arguments>
+<assign>
+<var>${request_body}</var>
+</assign>
+<msg timestamp="20180813 15:12:52.636" level="INFO">${request_body} = {'city': 'berlin', 'country': 'germany', 'extra': 'extraValue'}</msg>
+<status status="PASS" starttime="20180813 15:12:52.634" endtime="20180813 15:12:52.636"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${request_body}</arg>
+</arguments>
+<msg timestamp="20180813 15:12:52.638" level="INFO">{'city': 'berlin', 'country': 'germany', 'extra': 'extraValue'}</msg>
+<status status="PASS" starttime="20180813 15:12:52.637" endtime="20180813 15:12:52.639"></status>
+</kw>
+<kw name="Post" library="REST">
+<doc>Make a ``POST`` request call to a specified ``endpoint``.</doc>
+<arguments>
+<arg>${REQUEST_PATH}</arg>
+<arg>${request_body}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20180813 15:12:52.663" level="INFO">${response} = {'seconds': 0.017612, 'status': 422, 'body': {'message': 'Invalid input fields'}, 'headers': {'Content-Type': 'application/json', 'Content-Length': '42', 'Server': 'Werkzeug/0.14.1 Python/3.7.0', 'Dat...</msg>
+<status status="PASS" starttime="20180813 15:12:52.639" endtime="20180813 15:12:52.663"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response}</arg>
+</arguments>
+<msg timestamp="20180813 15:12:52.665" level="INFO">{'seconds': 0.017612, 'status': 422, 'body': {'message': 'Invalid input fields'}, 'headers': {'Content-Type': 'application/json', 'Content-Length': '42', 'Server': 'Werkzeug/0.14.1 Python/3.7.0', 'Date': 'Mon, 13 Aug 2018 13:12:52 GMT'}}</msg>
+<status status="PASS" starttime="20180813 15:12:52.665" endtime="20180813 15:12:52.666"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>should be equal as strings</arg>
+<arg>${response['status']}</arg>
+<arg>422</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response['status']}</arg>
+<arg>422</arg>
+</arguments>
+<msg timestamp="20180813 15:12:52.669" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20180813 15:12:52.668" endtime="20180813 15:12:52.669"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.667" endtime="20180813 15:12:52.669"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>should be equal as strings</arg>
+<arg>${response['body']['message']}</arg>
+<arg>Invalid input fields</arg>
+<arg>ignore_case=True</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response['body']['message']}</arg>
+<arg>Invalid input fields</arg>
+<arg>ignore_case=True</arg>
+</arguments>
+<status status="PASS" starttime="20180813 15:12:52.671" endtime="20180813 15:12:52.672"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.670" endtime="20180813 15:12:52.672"></status>
+</kw>
+<status status="PASS" starttime="20180813 15:12:52.632" endtime="20180813 15:12:52.673" critical="yes"></status>
+</test>
+<status status="PASS" starttime="20180813 15:12:50.263" endtime="20180813 15:12:52.677"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="5" fail="0">Critical Tests</stat>
+<stat pass="5" fail="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="5" fail="0" id="s1" name="Weather">Weather</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20180813 15:12:51.534" level="ERROR">Error in file 'C:\Users\Dina\PycharmProjects\Weather\Robot\Tests\Weather.robot': Resource file 'C:\Users\Dina\PycharmProjects\Weather\Robot\Keywords\DataManager.robot' contains a test case table which is not allowed.</msg>
+</errors>
+</robot>

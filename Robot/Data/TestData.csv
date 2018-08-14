@@ -1,0 +1,13 @@
+﻿title,city,country,status_code,returned_city,returned_country,error_message
+correct city and country,berlin,germany,200,berlin,germany,
+incorrect city - correct country,berlin,germany,400,,,Yahoo Weather did not return valid data
+correct city - wrong country,berlin,turkey,400,,,Yahoo Weather did not return valid data
+correct city - invalid country,berlin,blah,200,berlin,germany,
+invalid city - correct country,blah,germany,400,,,Yahoo Weather did not return valid data
+invalid city and country,blah,blah,400,,,Yahoo Weather did not return valid data
+empty city string,,germany,422,,,Invalid input fields
+empty country string,berlin,,422,,,Invalid input fields
+empty country and empty city,,,422,,,Invalid input fields
+special characters in city,!@#%,germany,422,,,Invalid input fields
+special characters in country,berlin,!@#%,422,,,Invalid input fields
+special characters in both city and country,!@#%,!@#%,422,,,Invalid input fields

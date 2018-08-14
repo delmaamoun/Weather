@@ -1,0 +1,30 @@
+{
+  "status": {
+    "type": "integer",
+    "enum": [
+        200,
+        422
+    ]
+  },
+  "body": {
+    "city": {
+      "type": "string",
+      "minLength": 1
+    },
+    "country": {
+      "type": "string",
+      "minLength": 1
+    },
+    "current": {
+      "type": "string",
+      "pattern":"-?[0-9]+"
+    },
+    "units": {
+      "type": "string",
+      "enum": [
+          "Celsius",
+          "Fahrenheit"
+      ]
+    }
+  }
+}
